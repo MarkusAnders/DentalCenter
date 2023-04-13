@@ -5,44 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - DentalCenter</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DentalCenter.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <img class="navbar-brand--img" asp-area="" >
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Denstiti</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Политика конфидециальности</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Create">Клиенты</a>
-                        </li>
-                    </ul>
+            <div class="container">
+                <div class="navbar-view flex-grow-1">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img class="navbar-brand--img" asp-area="" src="~/img/logotype.svg" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1"> 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Create">Клиенты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Услуги</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Create">Врачи</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Контакты</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav cabinet flex-grow-1">
+                            <li class="cabinet-item">
+                                <a class="cabinet-link t" asp-area="" asp-controller="" asp-action="">Личный кабинет</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <main role="main" class="pb-3">
+         <div class="container">
             @RenderBody()
-        </main>
-    </div>
-
+        </div>
+    </main>
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - DentalCenter - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-view">
+               <div class="footer-columns">
+                    <div class="footer-first--column">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img class="navbar-brand--img" asp-area="" src="~/img/logotype-footer.svg" />
+                        </a>
+                        <h6 class="footer-logotype-desc">
+                            Dentalist - это местная клиника косметической, профилактической и <br> восстановительной стоматологии с самым высоким рейтингом на First Hill
+                        </h6>
+                        <div class="footer-follow-soc">
+                            <p>Подпишись на нас</p>
+                            <div class="footer-follow-soc--img soc-img">
+                                <img src="/img/facebook.svg" class="soc-img--view" onclick="window.open('https://www.facebook.com')" />
+                                <img src="/img/twitter.svg" class="soc-img--view" onclick="window.open('https://www.twitter.com')" />
+                                <img src="/img/instagram.svg" class="soc-img--view" onclick="window.open('https://www.youtube.com')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-second--column second-column">
+                        <p class="second-column--title footer-column--title">Быстрые ссылки</p>
+                        <nav>
+                            <ul class="navbar-nav-footer"> 
+                                <li class="nav-item-footer">
+                                    <a class="nav-link--footer" asp-area="" asp-controller="Services" asp-action="Create">Услуги</a>
+                                </li>
+                                <li class="nav-item-footer">
+                                    <a class="nav-link--footer" asp-area="" asp-controller="Doctors" asp-action="Create">Доктора</a>
+                                </li>
+                                <li class="nav-item-footer">
+                                    <a class="nav-link--footer" asp-area="" asp-controller="" asp-action="">Контакты</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="footer-third--column third-column">
+                        <p class=" third-column--title footer-column--title"> Контакты и информация </p>
+                        <div class="footer-navigate">
+                            <div class="third-column--phone phone">
+                                <img src="~/img/phone.svg" class="third-column-svg" />
+                                <div class="phone-div">
+                                    <p class="third-column-subtitle">Номер телефона</p>
+                                    <a class="third-column--link" href="tel:+088123645987"> +088 123 654 987 </a>
+                                </div>
+                            </div>
+                            <div class="third-column--hour hour">
+                                <img src="~/img/hour.svg" class="third-column-svg" />
+                                <div class="hour-div">
+                                    <p class="third-column-subtitle">Время работы</p>
+                                    <p class="third-column--link">09:00 - 18:00</p>
+                                </div>
+                            </div>
+                            <div class="third-column--map map">
+                                <img src="~/img/map.svg" class="third-column-svg" />
+                                <div class="map-div">
+                                    <p class="third-column-subtitle">Наш адрес</p>
+                                    <a class="map-link third-column--link" onclick="window.open('https://yandex.ru/maps/10668/murom/?ll=42.060994%2C55.552441&mode=poi&poi%5Bpoint%5D=42.060458%2C55.551434&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D5776007362&z=17.96')">г.Муром, ул. Орлосвкая, д. 25Б.</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+               <div class="footer-privacy">
+                    &copy; Dentalist. All Right Reserved -  <a asp-area="" class="footer-privacy" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+               </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

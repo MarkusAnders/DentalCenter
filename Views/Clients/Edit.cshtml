@@ -35,6 +35,16 @@
                 <span asp-validation-for="ClientPhone" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ClientDateBirth" class="control-label"></label>
+                <input asp-for="ClientDateBirth" class="form-control" />
+                <span asp-validation-for="ClientDateBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClientPlaceHome" class="control-label"></label>
+                <input asp-for="ClientPlaceHome" class="form-control" />
+                <span asp-validation-for="ClientPlaceHome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

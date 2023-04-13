@@ -43,7 +43,7 @@
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 220, 53, 69;
   --bs-light-rgb: 248, 249, 250;
-  --bs-dark-rgb: 33, 37, 41;
+  --bs-dark-rgb: 49, 208, 236;
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-rgb: 33, 37, 41;
@@ -63,7 +63,7 @@
 *::after {
   box-sizing: border-box;
 }
-
+na
 @media (prefers-reduced-motion: no-preference) {
   :root {
     scroll-behavior: smooth;
@@ -3983,9 +3983,9 @@ textarea.form-control-lg {
   justify-content: space-between;
 }
 .navbar-brand {
+  display: block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
-  margin-right: 1rem;
   font-size: 1.25rem;
   text-decoration: none;
   white-space: nowrap;
@@ -4017,6 +4017,7 @@ textarea.form-control-lg {
 }
 
 .navbar-toggler {
+  display: block;
   padding: 0.25rem 0.75rem;
   font-size: 1.25rem;
   line-height: 1;
@@ -7684,7 +7685,7 @@ textarea.form-control-lg {
 
 .text-dark {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
+  color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity));
 }
 
 .text-black {

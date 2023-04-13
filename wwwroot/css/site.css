@@ -1,5 +1,12 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 html {
-  font-size: 14px;
+    position: relative;
+    font-size: 14px;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,15 +15,239 @@ html {
   }
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%
+}
+
+main{
+    flex: 1 0 auto;
+}
+
+footer{
+    position: relative !important;
+    flex: 0 0 auto !important;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+
+/*Шапка навигация*/
+
+@media (min-width: 1400px) {
+    header-container{
+        max-height: 1320px !important;
+        margin: 0 auto !important;
+    }
 }
 
-body {
-  margin-bottom: 60px;
+.navbar-view {
+    display: flex;
+    justify-content: space-between;
 }
+
+.navbar-nav{
+    justify-content: end;
+}
+
+.nav-item {
+    margin-left: 30px !important;
+}
+
+.nav-link {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0 !important;
+    position: relative;
+    transition: all .5s ease;
+}
+
+.nav-link:hover {
+    color: #583FBC !important;
+    text-shadow: 0 0 .85px #583FBC, 0 0 .85px #583FBC;
+}
+
+.nav-link::after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: -3px;
+    content: "";
+    display: block;
+    height: 2px;
+    right: 50%;
+    position: absolute;
+    background: linear-gradient(to left, #583FBC, #583FBC 100%);
+    transition: width .5s ease 0s, right .5s ease 0s;
+    width: 0;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    right: 0;
+}
+
+.menu__link_active {
+    color: #583FBC !important;
+    text-shadow: 0 0 .85px #583FBC, 0 0 .85px #583FBC;
+}
+
+.menu__link_active::before {
+    right: 0;
+    content: '';
+    width: 100%;
+    bottom: -3px;
+    display: block;
+    position: absolute;
+    transition: all .5s ease;
+    border-bottom: solid 2px #61C6FF;
+}
+
+.cabinet-link {
+    padding: 13px 25px;
+    background-color: #583FBC;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff !important;
+    font-weight: 500;
+    transition: 0.5s ease all;
+}
+
+.cabinet-link:hover {
+    background-color: #583FDF;
+}
+
+/*Шапка навигация*/
+
+/*футер*/
+
+footer {
+    background-color: #041434;
+}
+.footer-view{
+    padding: 100px 0 50px 0;
+}
+
+.footer-columns{
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-column--title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.footer-logotype-desc {
+    margin: 30px 0 65px 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+}
+
+.footer-follow-soc {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.footer-follow-soc--img{
+    display: flex;
+    gap: 25px;
+}
+
+.navbar-nav-footer{
+    line-height: 35px;
+    padding: 0;
+}
+
+.nav-item-footer {
+    list-style: none;
+}
+
+.nav-link--footer{
+    text-decoration: none;
+    color: #fff;
+    transition: 0.5s ease all;
+}
+
+.nav-link--footer:hover{
+    color: #583FBC;
+    transition: 0.5s ease all;
+}
+
+.soc-img--view {
+    cursor: pointer;
+}
+
+.third-column-svg{
+    margin-right: 25px;
+}
+
+.third-column-subtitle {
+    margin: 0 0;
+    line-height: 20px;
+}
+
+.third-column--link {
+    line-height: 20px;
+    text-decoration: none;
+    color: #fff !important;
+    font-size: 18px;
+    margin: 0 0;
+}
+
+.footer-navigate{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.phone {
+    display: flex;
+}
+
+.phone-div{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around
+}
+
+.hour {
+    display: flex;
+}
+
+.hour-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around
+}
+
+.map {
+    display: flex;
+}
+
+.map-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around
+}
+
+.map-link{
+    cursor: pointer;
+}
+
+.footer-privacy{
+    color: #fff !important;
+    text-decoration: none;
+}
+
+
+
+/*футер*/

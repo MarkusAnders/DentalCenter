@@ -55,7 +55,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone")] Client client)
+        public async Task<IActionResult> Create([Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
             if (id != client.ClientId)
             {

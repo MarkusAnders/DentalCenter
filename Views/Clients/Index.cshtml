@@ -25,6 +25,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ClientPhone)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientDateBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientPlaceHome)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +48,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ClientPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientDateBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientPlaceHome)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ClientId">Edit</a> |
