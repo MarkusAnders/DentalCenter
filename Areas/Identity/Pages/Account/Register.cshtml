@@ -1,0 +1,56 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<main role="main" class="pb-3-auto-reg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4-register">
+                <h1 class="row-main-title title-register">@ViewData["Title"]</h1>
+                <h2 class="row-subtitle">Зарегистрируйте новую учетную запись для входа в систему</h2>
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" placeholder="First name" />
+                        <label asp-for="Input.FirstName">Имя</label>
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" placeholder="Last name" />
+                        <label asp-for="Input.LastName">Фамилия</label>
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <label asp-for="Input.Email">Email</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.Password">Пароль</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.ConfirmPassword">Подтвердить пароль </label>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="row-btn-view btn-view">
+                        <button id="registerSubmit" type="submit" class="btn btn-lg btn-primary btn-auto-reg">Зарегистрироваться</button>
+                        <a class="row-link btn-auto-reg" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Авторизация</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+    </div>
+</main>
+
+
+

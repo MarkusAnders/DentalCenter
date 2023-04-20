@@ -1,13 +1,25 @@
 using DentalCenter.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
+using Microsoft.AspNetCore.Identity;
+using DentalCenter.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
+
 builder.Services.AddDbContext<DentalCenterDBContext>(optioins => optioins.UseSqlServer(builder.Configuration.GetConnectionString("DentalCenterDataBaseConnect")));
 
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DentalCenterDataBaseConnect")));
+
+builder.Services.AddIdentity<DentalCenterUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false). AddEntityFrameworkStores<IdentityContext>();
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.AccessDeniedPath = new PathString("/Identity/Account/AccessDenied");
+    opt.LoginPath = new PathString("/Identity/Account/Login");
+});
 
 var app = builder.Build();
 
@@ -24,10 +36,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
 	pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

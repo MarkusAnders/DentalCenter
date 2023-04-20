@@ -5,59 +5,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<main role="main" class="pb-3">
+    <div class="container">
+        <h1>Edit</h1>
 
-<h4>Doctor</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DoctorId" />
-            <div class="form-group">
-                <label asp-for="DoctorSurname" class="control-label"></label>
-                <input asp-for="DoctorSurname" class="form-control" />
-                <span asp-validation-for="DoctorSurname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorName" class="control-label"></label>
-                <input asp-for="DoctorName" class="form-control" />
-                <span asp-validation-for="DoctorName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorPatronymic" class="control-label"></label>
-                <input asp-for="DoctorPatronymic" class="form-control" />
-                <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorCabinet" class="control-label"></label>
-                <input asp-for="DoctorCabinet" class="form-control" />
-                <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
-            </div>
+        <h4>Doctor</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="DoctorId" />
+                    <div class="form-group">
+                        <label asp-for="DoctorSurname" class="control-label"></label>
+                        <input asp-for="DoctorSurname" class="form-control" />
+                        <span asp-validation-for="DoctorSurname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DoctorName" class="control-label"></label>
+                        <input asp-for="DoctorName" class="form-control" />
+                        <span asp-validation-for="DoctorName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DoctorPatronymic" class="control-label"></label>
+                        <input asp-for="DoctorPatronymic" class="form-control" />
+                        <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DoctorCabinet" class="control-label"></label>
+                        <input asp-for="DoctorCabinet" class="form-control" />
+                        <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
+                    </div>
 
-            <input type="hidden" name="Photo" value="@Model.DoctorPhoto" />
+                    <input type="hidden" name="Photo" value="@Model.DoctorPhoto" />
 
-            @if (ViewBag.Photodata != null)
-            {
-                    <img class="mt-4 mb-4"  width="200" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Photodata))">
+                    @if (ViewBag.Photodata != null)
+                    {
+                        <img class="mt-4 mb-4" width="200" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Photodata))">
+                    }
+
+                    <div class="form-group">
+                        <div class="mt-4">
+                            <input type="file" name="upload" class="form-control" accept="image/*" /><br>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
             }
+        }
 
-            <div class="form-group">
-                <div class="mt-4">
-                    <input type="file" name="upload" class="form-control" accept="image/*" /><br>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
     </div>
-</div>
+</main>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
