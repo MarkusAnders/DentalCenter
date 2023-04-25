@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+ul{
+    list-style: none;
+}
+
 html {
     position: relative;
     font-size: 14px;
@@ -104,7 +108,7 @@ footer{
     border-bottom: solid 2px #61C6FF;
 }
 
-.cabinet-link {
+.dropdown-cabinet {
     padding: 13px 25px;
     background-color: #583FBC;
     border-radius: 12px;
@@ -117,8 +121,86 @@ footer{
     transition: 0.5s ease all;
 }
 
-.cabinet-link:hover {
+.dropdown-cabinet:hover {
     background-color: #583ff6;
+}
+
+.topmenu > li {
+  display: inline-block;
+  margin-right: 20px;
+  position: relative;
+}
+
+.topmenu > li:last-child {
+  margin-right: 0;
+}
+
+.submenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 370px;
+    z-index: 10;
+    -webkit-transition: 0.4s ease-out;
+    -moz-transition: 0.4s ease-out;
+    -o-transition: 0.4s ease-out;
+    transition: 0.4s ease-out;
+    visibility: hidden;
+    opacity: 0;
+    background: #DBDEFA;
+    padding: 20px;
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.25);
+}
+
+ul li:hover .submenu {
+    visibility: visible;
+    opacity: 1;
+    border-radius: 12px 0 12px 12px;
+}
+
+ul li:hover .dropdown-cabinet {
+    border-radius: 12px 12px 0 0;
+}
+
+.submenu-user {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #747373;
+    margin-bottom: 15px;
+}
+
+.submenu-user-logo{
+    
+}
+
+.submenu-title {
+    color: #444444;
+    margin: 0 0 0 10px;
+    font-weight: 500;
+}
+
+.submenu-link {
+    background-color: #DBDEFA;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: #2c2c2c;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 20px;
+    transition: 0.5s ease all;
+}
+
+.submenu-link:hover {
+    background-color: #583FBC;
+    color: #fff;
+}
+
+.submenu li:nth-last-child(n+2){
+    margin-bottom: 7px;
 }
 
 /*Шапка*/

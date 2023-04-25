@@ -4,25 +4,54 @@
 @inject SignInManager<DentalCenterUser> SignInManager
 @inject UserManager<DentalCenterUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="navbar-nav topmenu">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-        </form>
-    </li>
+         <a class="dropdown-cabinet">Личный кабинет</a>
+            <ul class="dropdown-submenu submenu">
+            <li>
+                <div class="submenu-user">
+                    <img class="submenu-user-logo" src="~/img/user.png">
+                        <p class="submenu-title">@UserManager.GetUserName(User)</p>
+                </div>
+            </li>
+            <li>
+                <a class="submenu-link" id="manage" asp-area="identity" asp-page="/account/manage/index" title="manage">Профиль</a>
+            </li>
+            <li>
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="submenu-link border-0">Выйти</button>
+                </form>
+            </li>
+        </ul>
+@*            <a id="manage" class="dropdown-cabinet" asp-area="identity" asp-page="/account/manage/index" title="manage">личный кабинет: </a>
+*@    </li>
 }
 else
 {
     @*<li class="nav-item">
         <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>*@
-    <li class="nav-item">
-            <a class="cabinet-link" id="login" asp-area="Identity" asp-page="/Account/Login">Личный кабинет</a>
+    @*<li class="nav-item">
+    <a class="dropdown-cabinet" id="login" asp-area="Identity" asp-page="/Account/Login">Личный кабинет</a>
+    </li>*@
+    <li>
+        <a class="dropdown-cabinet">Личный кабинет</a>
+            <ul class="dropdown-submenu submenu">
+            <li>
+                <div class="submenu-user">
+                    <img class="submenu-user-logo" src="~/img/user.png">
+                    <p class="submenu-title">Необходимо войти в учетную запись</p>
+                </div>
+            </li>
+            <li>
+                <a class="submenu-link" id="login" asp-area="Identity" asp-page="/Account/Login">Авторизация</a>
+            </li>
+            <li>
+                <a class="submenu-link" id="register" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+            </li>
+        </ul>
     </li>
 }
 </ul>

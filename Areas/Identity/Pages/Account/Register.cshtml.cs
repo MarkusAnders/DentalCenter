@@ -86,6 +86,11 @@ namespace DentalCenter.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required]
+            [DataType(DataType.Text)]
+            [Display(Name = "Отчество")]
+            public string Patronymic { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -106,7 +111,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Подвердить пароль")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -127,6 +132,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
 
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.Patronymic = Input.Patronymic;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

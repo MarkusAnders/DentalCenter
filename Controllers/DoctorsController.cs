@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DentalCenter.Models;
 using System.Numerics;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DentalCenter.Controllers
 {
@@ -31,6 +32,7 @@ namespace DentalCenter.Controllers
                           Problem("Entity set 'DentalCenterDBContext.Doctors'  is null.");
         }
 
+        [Authorize(Roles = "admin, doctor")]
         // GET: Doctors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -49,6 +51,7 @@ namespace DentalCenter.Controllers
             return View(doctor);
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Doctors/Create
         public IActionResult Create()
         {
@@ -82,6 +85,7 @@ namespace DentalCenter.Controllers
             return View(doctor);
         }
 
+        [Authorize(Roles = "admin, doctor")]
         // GET: Doctors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -161,6 +165,7 @@ namespace DentalCenter.Controllers
             return View(doctor);
         }
 
+        [Authorize(Roles = "admin, doctor")]
         // GET: Doctors/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

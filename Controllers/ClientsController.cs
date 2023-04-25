@@ -6,13 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalCenter.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DentalCenter.Controllers
 {
+    [Authorize(Roles = "admin, guest")]
+
     public class ClientsController : Controller
     {
         private readonly DentalCenterDBContext _context;
 
+        
         public ClientsController(DentalCenterDBContext context)
         {
             _context = context;
@@ -43,6 +47,9 @@ namespace DentalCenter.Controllers
 
             return View(client);
         }
+
+
+        [Authorize(Roles = "admin")]
 
         // GET: Clients/Create
         public IActionResult Create()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DentalCenter.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace DentalCenter.Controllers
                         Problem("Entity set 'DentalCenterDBContext.Service'  is null.");
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Services/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,6 +46,7 @@ namespace DentalCenter.Controllers
             return View(service);
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Services/Create
         public IActionResult Create()
         {
@@ -66,6 +69,7 @@ namespace DentalCenter.Controllers
             return View(service);
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Services/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -117,6 +121,7 @@ namespace DentalCenter.Controllers
             return View(service);
         }
 
+        [Authorize(Roles = "admin")]
         // GET: Services/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
