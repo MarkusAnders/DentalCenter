@@ -7,16 +7,24 @@ namespace DentalCenter.Models
 	{
 		public int ClientId { get; set; }
 
-		[Display(Name = "Фамилия")]
+        [EmailAddress(ErrorMessage = "Некорректный e-mail")]
+        [Required(ErrorMessage = "Введите e-mail")]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Введите фамилию")]
+        [Display(Name = "Фамилия")]
         public string ClientSurname { get; set; }
 
-		[Display(Name = "Имя")]
+        [Required(ErrorMessage = "Введите имя")]
+        [Display(Name = "Имя")]
 		public string ClientName { get; set; }
 
-		[Display(Name = "Отчество")]
+        [Required(ErrorMessage = "Введите отчество")]
+        [Display(Name = "Отчество")]
         public string ClientPatronymic { get; set; }
 
-		[Display(Name = "Номер телефона")]
+        [Display(Name = "Номер телефона")]
         [RegularExpression(@"^\+7 \(\d{3}\) \d{3}-\d{4}$", ErrorMessage = "Не верный формат номера телефона.")]
         public string? ClientPhone { get; set; }
 

@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalCenter.Models;
-using System.Numerics;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DentalCenter.Controllers
@@ -15,13 +13,10 @@ namespace DentalCenter.Controllers
     public class DoctorsController : Controller
     {
         private readonly DentalCenterDBContext _context;
-        private readonly IWebHostEnvironment _appEnvironment;
 
-        public DoctorsController(DentalCenterDBContext context, IWebHostEnvironment appEnvironment)
+        public DoctorsController(DentalCenterDBContext context)
         {
             _context = context;
-            _appEnvironment = appEnvironment;
-
         }
 
         // GET: Doctors
@@ -63,21 +58,10 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorId,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor, IFormFile upload)
+        public async Task<IActionResult> Create([Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
-                if (upload != null)
-                {
-                    string path = "/PhotoDoctors/" + upload.FileName;
-                    using (var fileStream = new
-                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                    {
-                        await upload.CopyToAsync(fileStream);
-                    }
-                    doctor.DoctorPhoto = path;
-                }
-
                 _context.Add(doctor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,18 +83,6 @@ namespace DentalCenter.Controllers
             {
                 return NotFound();
             }
-
-            if (!doctor.DoctorPhoto.IsNullOrEmpty())
-            {
-                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + doctor.DoctorPhoto);
-
-                ViewBag.Photodata = photodata;
-            }
-            else
-            {
-                ViewBag.Photodata = null;
-            }
-
             return View(doctor);
         }
 
@@ -119,7 +91,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor, IFormFile? upload)
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor)
         {
             if (id != doctor.DoctorId)
             {
@@ -128,22 +100,6 @@ namespace DentalCenter.Controllers
 
             if (ModelState.IsValid)
             {
-                if (upload != null)
-                {
-                    string path = "/PhotoDoctors/" + upload.FileName;
-                    using (var fileStream = new
-                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
-                    {
-                        await upload.CopyToAsync(fileStream);
-                    }
-                    if (!doctor.DoctorPhoto.IsNullOrEmpty())
-                    {
-                        System.IO.File.Delete(_appEnvironment.WebRootPath +
-                       doctor.DoctorPhoto);
-                    }
-                    doctor.DoctorPhoto = path;
-                }
-
                 try
                 {
                     _context.Update(doctor);

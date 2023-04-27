@@ -10,13 +10,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DentalCenter.Controllers
 {
-    [Authorize(Roles = "admin, guest")]
-
+    [Authorize(Roles = "admin, client")]
     public class ClientsController : Controller
     {
         private readonly DentalCenterDBContext _context;
 
-        
         public ClientsController(DentalCenterDBContext context)
         {
             _context = context;
@@ -50,7 +48,6 @@ namespace DentalCenter.Controllers
 
 
         [Authorize(Roles = "admin")]
-
         // GET: Clients/Create
         public IActionResult Create()
         {
@@ -62,7 +59,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
+        public async Task<IActionResult> Create([Bind("ClientId,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +91,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClientId,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("ClientId,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
             if (id != client.ClientId)
             {

@@ -6,6 +6,11 @@ namespace DentalCenter.Models
     {
         public int DoctorId { get; set; }
 
+        [EmailAddress(ErrorMessage = "Некорректный e-mail")]
+        [Required(ErrorMessage = "Введите e-mail")]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
+
         [Display(Name = "Фамилия")]
         public string DoctorSurname { get; set; }
 
@@ -16,7 +21,7 @@ namespace DentalCenter.Models
         public string DoctorPatronymic { get; set; }
 
         [Display(Name ="Номер кабинета")]
-        public int DoctorCabinet { get; set; }
+        public int? DoctorCabinet { get; set; }
 
         [Display(Name = "Фотография")]
         public string? DoctorPhoto { get; set; }

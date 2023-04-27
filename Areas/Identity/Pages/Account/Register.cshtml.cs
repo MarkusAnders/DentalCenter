@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using DentalCenter.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentalCenter.Areas.Identity.Pages.Account
 {
@@ -29,6 +31,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
         private readonly IUserStore<DentalCenterUser> _userStore;
         private readonly IUserEmailStore<DentalCenterUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly DentalCenterDBContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
@@ -36,13 +39,15 @@ namespace DentalCenter.Areas.Identity.Pages.Account
             IUserStore<DentalCenterUser> userStore,
             SignInManager<DentalCenterUser> signInManager,
             ILogger<RegisterModel> logger,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            DentalCenterDBContext context, IWebHostEnvironment appEnvironment)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
             _roleManager = roleManager;
         }
 
@@ -148,13 +153,31 @@ namespace DentalCenter.Areas.Identity.Pages.Account
                     if (!await _roleManager.RoleExistsAsync("doctor"))
                         await _roleManager.CreateAsync(new IdentityRole("doctor"));
 
-                    if (!await _roleManager.RoleExistsAsync("guest"))
-                        await _roleManager.CreateAsync(new IdentityRole("guest"));
+                    if (!await _roleManager.RoleExistsAsync("client"))
+                        await _roleManager.CreateAsync(new IdentityRole("client"));
 
-                    await _userManager.AddToRoleAsync(user, "guest");
+                    Client client = new()
+                    {
+                        ClientSurname = Input.LastName,
+                        ClientName = Input.FirstName,
+                        ClientPatronymic = Input.Patronymic,
+                        Email = Input.Email,
+
+                    };
+                    await _userManager.AddToRoleAsync(user, "client");
+                    await _context.AddAsync(client);
+
+                    //Doctor doctor = new()
+                    //{
+                    //    DoctorName = Input.FirstName,
+                    //    DoctorSurname = Input.LastName,
+                    //    DoctorPatronymic = Input.Patronymic,
+                    //    Email = Input.Email,
+                    //};
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
-
+                    await _context.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DentalCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrateDBChangeModelClient : Migration
+    public partial class MigrateDBChangeModels : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<int>(
+                name: "DoctorCabinet",
+                table: "Doctors",
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Email",
+                table: "Doctors",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
             migrationBuilder.AlterColumn<string>(
                 name: "ClientPlaceHome",
                 table: "Clients",
@@ -36,11 +51,36 @@ namespace DentalCenter.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Email",
+                table: "Clients",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Email",
+                table: "Doctors");
+
+            migrationBuilder.DropColumn(
+                name: "Email",
+                table: "Clients");
+
+            migrationBuilder.AlterColumn<int>(
+                name: "DoctorCabinet",
+                table: "Doctors",
+                type: "int",
+                nullable: false,
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
+
             migrationBuilder.AlterColumn<string>(
                 name: "ClientPlaceHome",
                 table: "Clients",

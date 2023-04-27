@@ -16,6 +16,11 @@
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="ClientSurname" class="control-label"></label>
                         <input asp-for="ClientSurname" class="form-control" />
                         <span asp-validation-for="ClientSurname" class="text-danger"></span>
@@ -64,4 +69,3 @@
 
     </div>
 </main>
-

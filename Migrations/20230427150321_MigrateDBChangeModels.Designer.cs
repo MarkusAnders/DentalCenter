@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DentalCenter.Migrations
 {
     [DbContext(typeof(DentalCenterDBContext))]
-    [Migration("20230425105057_MigrateDBChangeModelClient")]
-    partial class MigrateDBChangeModelClient
+    [Migration("20230427150321_MigrateDBChangeModels")]
+    partial class MigrateDBChangeModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -55,6 +55,10 @@ namespace DentalCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ClientId");
 
                     b.ToTable("Clients");
@@ -68,7 +72,7 @@ namespace DentalCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
 
-                    b.Property<int>("DoctorCabinet")
+                    b.Property<int?>("DoctorCabinet")
                         .HasColumnType("int");
 
                     b.Property<string>("DoctorName")
@@ -83,6 +87,10 @@ namespace DentalCenter.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DoctorSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
