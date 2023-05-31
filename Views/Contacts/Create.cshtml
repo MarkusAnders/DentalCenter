@@ -1,0 +1,70 @@
+﻿@model DentalCenter.Models.Contact
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pb-3">
+    <div class="contact-img"></div>
+    <div class="container">
+        <div class="row">
+            <div class="contacts contact">
+                <h1 class="contact-title title">Контакты</h1>
+                <h3 class="contact-subtitle subtitle">Единственная клиника в городе с полным спектром услуг от компьютерной диагностики до имплантации. Большой выбор материалов для протезирования в широком ценовом диапазоне позволит успешно восстановить целостность и функциональность зубного ряда и сделает вашу улыбку сияющей и неотразимой</h3>
+                <form asp-action="Create">
+                    <div class="contact">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="contact-form form">
+                            <div class="form-input-row">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ContactSurname" class="form-control contact-input" placeholder="Surname" />
+                                    <label asp-for="ContactSurname">Фамилия</label>
+                                    <span asp-validation-for="ContactSurname" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ContactName" class="form-control contact-input" placeholder="Name" />
+                                    <label asp-for="ContactName">Имя</label>
+                                    <span asp-validation-for="ContactName" class="text-danger"></span>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input asp-for="ContactPhone" class="form-control contact-input phone-input" placeholder="Phone" />
+                                    <label asp-for="ContactPhone">Номер телефона</label>
+                                    <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea asp-for="ContactMessage" class="form-control contact-mes" placeholder="Message"></textarea>
+                                <label asp-for="ContactMessage">Сообщение</label>
+                                <span asp-validation-for="ContactMessage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Отправить" class="btn btn-lg btn-primary btn-send" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <h3 class="contact-title title">Где мы находимся</h3>
+                <div>
+                    <iframe class="contact-map" scrolling="no" src="https://yandex.ru/map-widget/v1/?ll=42.050277%2C55.572317&mode=search&oid=8623507184&ol=biz&z=16.45" width="100" frameborder="1" allowfullscreen="true"></iframe>
+                </div>
+            </div>
+            
+        </div>
+        
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+    </div>
+    <div class="popup-bg">
+        <div class="popup">
+            <p class="popup__text">
+                Ваша заявка принята<br>
+                Наш менеджер свяжется с вами в ближайшие время.
+            </p>
+            <img src="~/img/close-popup.png" alt="close icon" class="popup__close">
+        </div>
+    </div>
+</main>
+

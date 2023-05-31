@@ -1,0 +1,47 @@
+﻿@model DentalCenter.Models.Contact
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pb-3">
+    <div class="contact-img contact-img-delete"></div>
+    <div class="container">
+        <h3 class="contact-subtitle subtitle-delete">Вы уверены, что хотите удалить запись?</h3>
+        <div class="delete-view">
+            <dl class="row">
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.ContactName)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model=> model.ContactName)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.ContactSurname)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.ContactSurname)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.ContactPhone)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.ContactPhone)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.ContactMessage)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.ContactMessage)
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <a class="btn btn-primary" asp-action="Index">Вернуться к списку</a>
+                <input type="hidden" asp-for="ContactId" />
+                <input type="submit" value="Удалить" class="btn btn-danger btn-delete" />
+                
+            </form>
+        </div>
+    </div>
+</main>

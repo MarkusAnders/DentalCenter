@@ -4,6 +4,7 @@
 @inject SignInManager<DentalCenterUser> SignInManager
 @inject UserManager<DentalCenterUser> UserManager
 
+
 <ul class="navbar-nav topmenu">
 @if (SignInManager.IsSignedIn(User))
 {
@@ -13,13 +14,41 @@
             <li>
                 <div class="submenu-user">
                     <img class="submenu-user-logo" src="~/img/user.png">
-                        <p class="submenu-title">@UserManager.GetUserName(User)</p>
+                    <p class="submenu-title">@UserManager.GetUserName(User)</p>
                 </div>
-            </li>
-            <li>
-                <a class="submenu-link" id="manage" asp-area="identity" asp-page="/account/manage/index" title="manage">Профиль</a>
-            </li>
-            <li>
+            </li>  
+                @if (User.IsInRole("doctor"))
+                {
+                   @* <li>
+                        <a class="submenu-link" id="manage" title="manage">Профиль</a>
+                    </li>*@
+                    
+                   <li>
+                        <div>
+                            <a class="submenu-link" asp-action="Details" asp-controller="Doctors" asp-route-id="@ViewBag.DoctorId">Профиль</a>
+                        </div>
+                   </li>
+                }else if (User.IsInRole("client"))
+                {
+                    <li>
+                        <a class="submenu-link" title="manage">Профиль</a>
+                    </li>
+                }
+
+                @if (User.IsInRole("admin"))
+                {
+                    <li>
+                        <a class="submenu-link" asp-controller="Contacts" asp-action="Index">Список заявок</a>
+                    </li>
+                    <li>
+                        <a class="submenu-link" asp-controller="Services" asp-action="Create">Создать услугу</a>
+                    </li>
+                    <li>
+                        <a class="submenu-link" id="register" asp-area="Identity" asp-page="/Account/Register">Зарегистрировать Доктора</a>
+                    </li>
+                    
+                }
+                <li>
                 <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button id="logout" type="submit" class="submenu-link border-0">Выйти</button>
                 </form>

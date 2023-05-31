@@ -23,16 +23,13 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1"> 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Create">Клиенты</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Create">Услуги</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Index">Врачи</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Doctors" asp-action="Create">Врачи</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Контакты</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contacts" asp-action="Create">Контакты</a>
                             </li>
                         </ul>
                     </div>
@@ -69,13 +66,13 @@
                         <nav>
                             <ul class="navbar-nav-footer"> 
                                 <li class="nav-item-footer">
-                                    <a class="nav-link--footer" asp-area="" asp-controller="Services" asp-action="Create">Услуги</a>
+                                    <a class="nav-link--footer" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
                                 </li>
                                 <li class="nav-item-footer">
-                                    <a class="nav-link--footer" asp-area="" asp-controller="Doctors" asp-action="Create">Доктора</a>
+                                    <a class="nav-link--footer" asp-area="" asp-controller="Doctors" asp-action="Index">Доктора</a>
                                 </li>
                                 <li class="nav-item-footer">
-                                    <a class="nav-link--footer" asp-area="" asp-controller="" asp-action="">Контакты</a>
+                                    <a class="nav-link--footer" asp-area="" asp-controller="Contacts" asp-action="Create">Контакты</a>
                                 </li>
                             </ul>
                         </nav>
@@ -87,7 +84,7 @@
                                 <img src="~/img/phone.svg" class="third-column-svg" />
                                 <div class="phone-div">
                                     <p class="third-column-subtitle">Номер телефона</p>
-                                    <a class="third-column--link" href="tel:+088123645987"> +088 123 654 987 </a>
+                                    <a class="third-column--link" href="tel:89307414141"> 8 (930) 741 41 41 </a>
                                 </div>
                             </div>
                             <div class="third-column--hour hour">
@@ -114,6 +111,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/jquery.maskedinput.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

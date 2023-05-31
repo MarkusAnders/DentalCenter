@@ -81,6 +81,8 @@ namespace DentalCenter.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             /// 
+            public string UserType { get; set; }
+
             [Required]
             [DataType(DataType.Text)]
             [Display(Name = "Имя")]
@@ -105,7 +107,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Длина пароля должна составлять не менее {2} и не более {1} символов.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]
             public string Password { get; set; }
@@ -167,14 +169,23 @@ namespace DentalCenter.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, "client");
                     await _context.AddAsync(client);
 
-                    //Doctor doctor = new()
-                    //{
-                    //    DoctorName = Input.FirstName,
-                    //    DoctorSurname = Input.LastName,
-                    //    DoctorPatronymic = Input.Patronymic,
-                    //    Email = Input.Email,
-                    //};
+                    if (Input.UserType == "Врач")
+                    {
+                        Doctor doctor = new()
+                        {
+                            DoctorName = Input.FirstName,
+                            DoctorSurname = Input.LastName,
+                            DoctorPatronymic = Input.Patronymic,
+                            Email = Input.Email,
+                            IdentityUser = user,
+                        };
 
+                        await _userManager.AddToRoleAsync(user, "doctor");
+                        _context.Doctors.Add(doctor);
+                        _context.SaveChanges();
+
+                        return Redirect("~/Home/Index");
+                    }
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     await _context.SaveChangesAsync();

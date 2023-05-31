@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
 namespace DentalCenter.Models
@@ -25,7 +26,6 @@ namespace DentalCenter.Models
         public string ClientPatronymic { get; set; }
 
         [Display(Name = "Номер телефона")]
-        [RegularExpression(@"^\+7 \(\d{3}\) \d{3}-\d{4}$", ErrorMessage = "Не верный формат номера телефона.")]
         public string? ClientPhone { get; set; }
 
 		[Display(Name = "Дата рождения")]
@@ -36,6 +36,5 @@ namespace DentalCenter.Models
 		[Display(Name = "Место жительства")]
         [StringLength(50, ErrorMessage = "Поле не может иметь более 50 символов")]
         public string? ClientPlaceHome { get; set; }
-
-	}
+    }
 }

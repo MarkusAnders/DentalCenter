@@ -1,0 +1,64 @@
+﻿@model IList<DentalCenter.Models.ContactViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main role="main" class="pb-3">
+    <div class="container">
+        <h1 class="contact-title title">Список заявок</h1>
+        <form asp-action="DeleteContact" asp-controller="Contacts" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <input class="form-check-input check-head-table" type="checkbox" name="allcheck" id="selectAll" /> Выбрать все
+                        </th>
+                        <th>
+                            Фамилия
+                        </th>
+                        <th>
+                            Имя
+                        </th>
+                        <th>
+                            Номер телефона
+                        </th>
+                        <th>
+                            Сообщение
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="@Model[i].Emps.Value" />
+                                <input class="form-check-input" asp-for="@Model[i].Emps.Selected" />
+                                <input type="hidden" asp-for="@Model[i].ContactId" />
+                            </td>
+                            <td>
+                                <input type="hidden" asp-for="@Model[i].ContactSurname" />
+                                <label asp-for="@Model[i].ContactSurname">@Model[i].ContactSurname</label>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model[i].ContactName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model[i].ContactPhone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model[i].ContactMessage)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                <input class="btn btn-primary btn-delete" type="submit" value="Удалить"/>
+            </div>
+        </form>
+    </div>
+</main>
+

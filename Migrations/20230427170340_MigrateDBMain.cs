@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DentalCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrateServices : Migration
+    public partial class MigrateDBMain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace DentalCenter.Migrations
                 name: "ClientPhone",
                 table: "Clients",
                 type: "nvarchar(max)",
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(int),
                 oldType: "int");
 
@@ -23,14 +23,19 @@ namespace DentalCenter.Migrations
                 name: "ClientDateBirth",
                 table: "Clients",
                 type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "ClientPlaceHome",
                 table: "Clients",
                 type: "nvarchar(50)",
                 maxLength: 50,
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Email",
+                table: "Clients",
+                type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
 
@@ -40,10 +45,12 @@ namespace DentalCenter.Migrations
                 {
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DoctorPatronymic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DoctorCabinet = table.Column<int>(type: "int", nullable: false),
+                    DoctorSpecialization = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DoctorCabinet = table.Column<int>(type: "int", nullable: true),
                     DoctorPhoto = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -63,21 +70,6 @@ namespace DentalCenter.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Service", x => x.ServiceId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Specializations",
-                columns: table => new
-                {
-                    SpecializationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SpecializationName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    SpecializationEducation = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    SpecializationWorkExp = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Specializations", x => x.SpecializationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,32 +98,6 @@ namespace DentalCenter.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DoctorSpecialization",
-                columns: table => new
-                {
-                    DoctorSpecializationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    SpecializationId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DoctorSpecialization", x => x.DoctorSpecializationId);
-                    table.ForeignKey(
-                        name: "FK_DoctorSpecialization_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DoctorSpecialization_Specializations_SpecializationId",
-                        column: x => x.SpecializationId,
-                        principalTable: "Specializations",
-                        principalColumn: "SpecializationId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorService_DoctorId",
                 table: "DoctorService",
@@ -141,16 +107,6 @@ namespace DentalCenter.Migrations
                 name: "IX_DoctorService_ServiceId",
                 table: "DoctorService",
                 column: "ServiceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DoctorSpecialization_DoctorId",
-                table: "DoctorSpecialization",
-                column: "DoctorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DoctorSpecialization_SpecializationId",
-                table: "DoctorSpecialization",
-                column: "SpecializationId");
         }
 
         /// <inheritdoc />
@@ -160,16 +116,10 @@ namespace DentalCenter.Migrations
                 name: "DoctorService");
 
             migrationBuilder.DropTable(
-                name: "DoctorSpecialization");
-
-            migrationBuilder.DropTable(
-                name: "Service");
-
-            migrationBuilder.DropTable(
                 name: "Doctors");
 
             migrationBuilder.DropTable(
-                name: "Specializations");
+                name: "Service");
 
             migrationBuilder.DropColumn(
                 name: "ClientDateBirth",
@@ -179,13 +129,19 @@ namespace DentalCenter.Migrations
                 name: "ClientPlaceHome",
                 table: "Clients");
 
+            migrationBuilder.DropColumn(
+                name: "Email",
+                table: "Clients");
+
             migrationBuilder.AlterColumn<int>(
                 name: "ClientPhone",
                 table: "Clients",
                 type: "int",
                 nullable: false,
+                defaultValue: 0,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

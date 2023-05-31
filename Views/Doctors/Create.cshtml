@@ -4,63 +4,61 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main role="main" class="pb-3">
-    <div class="container">
-        <h1>Create</h1>
 
-        <h4>Doctor</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DoctorSurname" class="control-label"></label>
-                        <input asp-for="DoctorSurname" class="form-control" />
-                        <span asp-validation-for="DoctorSurname" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DoctorName" class="control-label"></label>
-                        <input asp-for="DoctorName" class="form-control" />
-                        <span asp-validation-for="DoctorName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DoctorPatronymic" class="control-label"></label>
-                        <input asp-for="DoctorPatronymic" class="form-control" />
-                        <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DoctorCabinet" class="control-label"></label>
-                        <input asp-for="DoctorCabinet" class="form-control" />
-                        <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="DoctorPhoto" class="control-label"></label>
-                        <input asp-for="DoctorPhoto" class="form-control" />
-                        <span asp-validation-for="DoctorPhoto" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                </form>
+<h1>Create</h1>
+
+<h4>Doctor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-        </div>
-
-        <div>
-            <a asp-action="Index">Back to List</a>
-        </div>
-
-        @section Scripts {
-            @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            }
-        }
-
+            <div class="form-group">
+                <label asp-for="DoctorSurname" class="control-label"></label>
+                <input asp-for="DoctorSurname" class="form-control" />
+                <span asp-validation-for="DoctorSurname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorName" class="control-label"></label>
+                <input asp-for="DoctorName" class="form-control" />
+                <span asp-validation-for="DoctorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorPatronymic" class="control-label"></label>
+                <input asp-for="DoctorPatronymic" class="form-control" />
+                <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorSpecialization" class="control-label"></label>
+                <input asp-for="DoctorSpecialization" class="form-control" />
+                <span asp-validation-for="DoctorSpecialization" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorCabinet" class="control-label"></label>
+                <input asp-for="DoctorCabinet" class="form-control" />
+                <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
+            </div>
+            <<div class="form-group">
+                <div class="mt-4">
+                    <input type="file" name="upload" class="form-control" /><br>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-</main>
+</div>
 
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

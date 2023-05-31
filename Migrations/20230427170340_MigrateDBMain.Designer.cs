@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DentalCenter.Migrations
 {
     [DbContext(typeof(DentalCenterDBContext))]
-    [Migration("20230412082109_MigrateServices")]
-    partial class MigrateServices
+    [Migration("20230427170340_MigrateDBMain")]
+    partial class MigrateDBMain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -33,7 +33,7 @@ namespace DentalCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
 
-                    b.Property<DateTime>("ClientDateBirth")
+                    b.Property<DateTime?>("ClientDateBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ClientName")
@@ -45,15 +45,17 @@ namespace DentalCenter.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClientPhone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClientPlaceHome")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ClientSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -70,7 +72,7 @@ namespace DentalCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
 
-                    b.Property<int>("DoctorCabinet")
+                    b.Property<int?>("DoctorCabinet")
                         .HasColumnType("int");
 
                     b.Property<string>("DoctorName")
@@ -84,7 +86,15 @@ namespace DentalCenter.Migrations
                     b.Property<string>("DoctorPhoto")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DoctorSpecialization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DoctorSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -116,29 +126,6 @@ namespace DentalCenter.Migrations
                     b.ToTable("DoctorService");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.DoctorSpecialization", b =>
-                {
-                    b.Property<int>("DoctorSpecializationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorSpecializationId"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecializationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DoctorSpecializationId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("DoctorSpecialization");
-                });
-
             modelBuilder.Entity("DentalCenter.Models.Service", b =>
                 {
                     b.Property<int>("ServiceId")
@@ -159,32 +146,6 @@ namespace DentalCenter.Migrations
                     b.ToTable("Service");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.Specialization", b =>
-                {
-                    b.Property<int>("SpecializationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecializationId"));
-
-                    b.Property<string>("SpecializationEducation")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("SpecializationName")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<int>("SpecializationWorkExp")
-                        .HasColumnType("int");
-
-                    b.HasKey("SpecializationId");
-
-                    b.ToTable("Specializations");
-                });
-
             modelBuilder.Entity("DentalCenter.Models.DoctorService", b =>
                 {
                     b.HasOne("DentalCenter.Models.Doctor", "Doctor")
@@ -202,25 +163,6 @@ namespace DentalCenter.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Service");
-                });
-
-            modelBuilder.Entity("DentalCenter.Models.DoctorSpecialization", b =>
-                {
-                    b.HasOne("DentalCenter.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DentalCenter.Models.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Specialization");
                 });
 #pragma warning restore 612, 618
         }

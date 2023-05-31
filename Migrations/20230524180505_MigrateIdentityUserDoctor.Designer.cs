@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DentalCenter.Migrations
 {
     [DbContext(typeof(DentalCenterDBContext))]
-    [Migration("20230427150321_MigrateDBChangeModels")]
-    partial class MigrateDBChangeModels
+    [Migration("20230524180505_MigrateIdentityUserDoctor")]
+    partial class MigrateIdentityUserDoctor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,73 @@ namespace DentalCenter.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("DentalCenter.Areas.Identity.Data.DentalCenterUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int?>("ModelId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Patronymic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DentalCenterUser");
+                });
 
             modelBuilder.Entity("DentalCenter.Models.Client", b =>
                 {
@@ -86,6 +153,9 @@ namespace DentalCenter.Migrations
                     b.Property<string>("DoctorPhoto")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DoctorSpecialization")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DoctorSurname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -94,7 +164,13 @@ namespace DentalCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IdentityUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("DoctorId");
+
+                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Doctors");
                 });
@@ -122,29 +198,6 @@ namespace DentalCenter.Migrations
                     b.ToTable("DoctorService");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.DoctorSpecialization", b =>
-                {
-                    b.Property<int>("DoctorSpecializationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorSpecializationId"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpecializationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DoctorSpecializationId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("DoctorSpecialization");
-                });
-
             modelBuilder.Entity("DentalCenter.Models.Service", b =>
                 {
                     b.Property<int>("ServiceId")
@@ -165,30 +218,15 @@ namespace DentalCenter.Migrations
                     b.ToTable("Service");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.Specialization", b =>
+            modelBuilder.Entity("DentalCenter.Models.Doctor", b =>
                 {
-                    b.Property<int>("SpecializationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("DentalCenter.Areas.Identity.Data.DentalCenterUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpecializationId"));
-
-                    b.Property<string>("SpecializationEducation")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("SpecializationName")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<int>("SpecializationWorkExp")
-                        .HasColumnType("int");
-
-                    b.HasKey("SpecializationId");
-
-                    b.ToTable("Specializations");
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("DentalCenter.Models.DoctorService", b =>
@@ -208,25 +246,6 @@ namespace DentalCenter.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Service");
-                });
-
-            modelBuilder.Entity("DentalCenter.Models.DoctorSpecialization", b =>
-                {
-                    b.HasOne("DentalCenter.Models.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DentalCenter.Models.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Specialization");
                 });
 #pragma warning restore 612, 618
         }

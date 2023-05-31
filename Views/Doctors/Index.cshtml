@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<DentalCenter.Models.Doctor>
 
 @{
-    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <main role="main" class="pb-3">
     <div class="container">
-        <h1>Index</h1>
+        <h1 class="doctor-title title">Врачи Dentalist.</h1>
+        <h3 class="doctor-subtitle subtitle">
+            Команда профессионалов ежегодно проходит обучение и повышает уровень квалификации. Мы используем последние технологии и самое современное оборудование
+        </h3>
 
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
+        @*<p>
+        <a asp-action="Create">Create New</a>
+        </p>*@
         <table class="table">
             <thead>
                 <tr>
@@ -25,6 +28,9 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.DoctorPatronymic)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DoctorSpecialization)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.DoctorCabinet)
@@ -52,6 +58,9 @@
                             @Html.DisplayFor(modelItem => item.DoctorPatronymic)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.DoctorSpecialization)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.DoctorCabinet)
                         </td>
                         <td>
@@ -66,7 +75,5 @@
                 }
             </tbody>
         </table>
-
     </div>
 </main>
-

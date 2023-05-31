@@ -7,16 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalCenter.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using DentalCenter.Areas.Identity.Data;
+using System.Numerics;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DentalCenter.Controllers
 {
     public class DoctorsController : Controller
     {
         private readonly DentalCenterDBContext _context;
+        private readonly IWebHostEnvironment _appEnvironment;
+        private readonly UserManager<DentalCenterUser> _userManager;
 
-        public DoctorsController(DentalCenterDBContext context)
+
+        public DoctorsController(DentalCenterDBContext context, IWebHostEnvironment appEnvironment, UserManager<DentalCenterUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
+            _appEnvironment = appEnvironment;
         }
 
         // GET: Doctors
@@ -35,18 +44,20 @@ namespace DentalCenter.Controllers
             {
                 return NotFound();
             }
-
+            
             var doctor = await _context.Doctors
-                .FirstOrDefaultAsync(m => m.DoctorId == id);
+                .FirstOrDefaultAsync(m => m.DoctorId == id && m.IdentityUserId == _userManager.GetUserId(HttpContext.User));
             if (doctor == null)
             {
                 return NotFound();
             }
 
+            ViewBag.DoctorId = doctor.DoctorId;
+
             return View(doctor);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, doctor")]
         // GET: Doctors/Create
         public IActionResult Create()
         {
@@ -58,18 +69,31 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor)
+        public async Task<IActionResult> Create([Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorSpecialization,DoctorCabinet,DoctorPhoto")] Doctor doctor, IFormFile? upload)
         {
             if (ModelState.IsValid)
             {
+                if (upload != null)
+                {
+                    string path = "/PhotoDoctors/" + upload.FileName;
+                    using (var fileStream = new
+                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+                    doctor.DoctorPhoto = path;
+                }
+
                 _context.Add(doctor);
                 await _context.SaveChangesAsync();
+                
+                string id = _userManager.GetUserId(HttpContext.User);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(doctor);
         }
 
-        [Authorize(Roles = "admin, doctor")]
         // GET: Doctors/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -83,15 +107,27 @@ namespace DentalCenter.Controllers
             {
                 return NotFound();
             }
+
+            if (!doctor.DoctorPhoto.IsNullOrEmpty())
+            {
+                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + doctor.DoctorId);
+                ViewBag.Photodata = photodata;
+            }
+            else
+            {
+                ViewBag.Photodata = null;
+            }
+
             return View(doctor);
         }
 
+        [Authorize(Roles = "admin, doctor")]
         // POST: Doctors/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorCabinet,DoctorPhoto")] Doctor doctor)
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorSpecialization,DoctorCabinet,DoctorPhoto")] Doctor doctor, IFormFile? upload)
         {
             if (id != doctor.DoctorId)
             {
@@ -100,6 +136,22 @@ namespace DentalCenter.Controllers
 
             if (ModelState.IsValid)
             {
+                if (upload != null)
+                {
+                    string path = "/PhotoDoctors/" + upload.FileName;
+                    using (var fileStream = new
+                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await upload.CopyToAsync(fileStream);
+                    }
+                    if (!doctor.DoctorPhoto.IsNullOrEmpty())
+                    {
+                        System.IO.File.Delete(_appEnvironment.WebRootPath +
+                       doctor.DoctorPhoto);
+                    }
+                    doctor.DoctorPhoto = path;
+                }
+
                 try
                 {
                     _context.Update(doctor);

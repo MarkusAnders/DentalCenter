@@ -13,7 +13,13 @@ builder.Services.AddDbContext<DentalCenterDBContext>(optioins => optioins.UseSql
 
 builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DentalCenterDataBaseConnect")));
 
-builder.Services.AddIdentity<DentalCenterUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false). AddEntityFrameworkStores<IdentityContext>();
+builder.Services.AddIdentity<DentalCenterUser, IdentityRole>(options =>
+ { 
+	 options.SignIn.RequireConfirmedAccount = false;
+     options.Password.RequireDigit = false;
+     options.Password.RequireNonAlphanumeric = false;
+     options.Password.RequiredLength = 4;
+ }). AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.ConfigureApplicationCookie(opt =>
 {

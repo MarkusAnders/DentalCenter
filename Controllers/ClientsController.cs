@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalCenter.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using DentalCenter.Areas.Identity.Data;
 
 namespace DentalCenter.Controllers
 {
@@ -102,6 +104,7 @@ namespace DentalCenter.Controllers
             {
                 try
                 {
+                    
                     _context.Update(client);
                     await _context.SaveChangesAsync();
                 }

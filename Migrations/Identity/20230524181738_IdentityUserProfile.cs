@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace DentalCenter.Migrations
+namespace DentalCenter.Migrations.Identity
 {
     /// <inheritdoc />
-    public partial class MigrateAddPhoto : Migration
+    public partial class IdentityUserProfile : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
