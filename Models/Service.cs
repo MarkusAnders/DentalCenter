@@ -5,6 +5,7 @@ namespace DentalCenter.Models
     public class Service
     {
         public int ServiceId { get; set; }
+
         [Display(Name = "Название услуги")]
         public string ServiceName { get; set; }
 
