@@ -10,7 +10,7 @@ namespace DentalCenter.Models
         public DbSet<Client> Clients { get; set; }  
         public DbSet<Doctor> Doctors { get; set; } 
         public DbSet<DentalCenter.Models.Service> Service { get; set; } = default!;
-        public DbSet<DentalCenter.Models.DoctorService> DoctorService { get; set; } = default!;
         public DbSet<DentalCenter.Models.Contact> Contact { get; set; } = default!;
+        public DbSet<DentalCenter.Models.Appointment> Appointment { get; set; } = default!;
     }
 }

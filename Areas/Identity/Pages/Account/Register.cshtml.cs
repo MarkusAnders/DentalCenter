@@ -164,6 +164,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
                         ClientName = Input.FirstName,
                         ClientPatronymic = Input.Patronymic,
                         Email = Input.Email,
+                        DentalCenterUser = user,
 
                     };
                     await _userManager.AddToRoleAsync(user, "client");

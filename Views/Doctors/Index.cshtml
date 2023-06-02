@@ -66,11 +66,20 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.DoctorPhoto)
                         </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.DoctorId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.DoctorId">Delete</a>
-                        </td>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.DoctorId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.DoctorId">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.DoctorId">Details</a>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>

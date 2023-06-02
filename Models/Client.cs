@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DentalCenter.Areas.Identity.Data;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
@@ -6,7 +7,7 @@ namespace DentalCenter.Models
 {
 	public class Client
 	{
-		public int ClientId { get; set; }
+		public int Id { get; set; }
 
         [EmailAddress(ErrorMessage = "Некорректный e-mail")]
         [Required(ErrorMessage = "Введите e-mail")]
@@ -36,5 +37,9 @@ namespace DentalCenter.Models
 		[Display(Name = "Место жительства")]
         [StringLength(50, ErrorMessage = "Поле не может иметь более 50 символов")]
         public string? ClientPlaceHome { get; set; }
+
+        
+        public DentalCenterUser? DentalCenterUser { get; set; }
+        public string DentalCenterUserId { get; set; }
     }
 }

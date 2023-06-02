@@ -11,10 +11,12 @@ namespace DentalCenter.Models
 
         [StringLength(150)]
         [Display(Name = "Описание услуги")]
-        public int ServiceDecription { get; set; }
+        public string ServiceDecription { get; set; }
 
         [Display(Name = "Цена услуги")]
+
         public int ServicePrice { get; set; }
-        
+
+        public ICollection<Doctor> Doctors { get; set; }
     }
 }

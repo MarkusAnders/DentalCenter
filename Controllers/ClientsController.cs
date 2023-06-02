@@ -39,7 +39,7 @@ namespace DentalCenter.Controllers
             }
 
             var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.ClientId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (client == null)
             {
                 return NotFound();
@@ -61,7 +61,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClientId,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
+        public async Task<IActionResult> Create([Bind("Id,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -93,9 +93,9 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClientId,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,ClientSurname,ClientName,ClientPatronymic,ClientPhone,ClientDateBirth,ClientPlaceHome")] Client client)
         {
-            if (id != client.ClientId)
+            if (id != client.Id)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace DentalCenter.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientExists(client.ClientId))
+                    if (!ClientExists(client.Id))
                     {
                         return NotFound();
                     }
@@ -133,7 +133,7 @@ namespace DentalCenter.Controllers
             }
 
             var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.ClientId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (client == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace DentalCenter.Controllers
 
         private bool ClientExists(int id)
         {
-          return (_context.Clients?.Any(e => e.ClientId == id)).GetValueOrDefault();
+          return (_context.Clients?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

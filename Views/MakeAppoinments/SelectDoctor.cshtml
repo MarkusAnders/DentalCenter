@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DentalCenter.Models.Doctor>
+
+
+<main role="main" class="pb-3">
+    <div class="container">
+        <h1 class="title">Выбор врача</h1>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorSurname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorPatronymic )
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorSpecialization)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorCabinet)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DoctorPhoto)
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorSurname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorPatronymic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorSpecialization)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoctorCabinet)
+                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DoctorPhoto)
+                    </th>
+                    <td>
+                        @using (Html.BeginForm("SelectDoctor", "MakeAppoinments", FormMethod.Post))
+                        {
+                            <div>
+                                <input type="hidden" name="ServiceId" value="@ViewBag.ServiceId" />
+                                <input type="hidden" name="DoctorId" value="@item.DoctorId" />
+                                <input type="submit" value="Выбрать" class="btn btn-primary" />
+                            </div>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </table>
+    </div>
+</main>

@@ -1,0 +1,26 @@
+﻿@model List<DentalCenter.Models.Doctor>
+
+<main role="main" class="pb-3">
+    <div class="container">
+
+        <h1 class="service-title title">Услуги Dentalist.</h1>
+
+        <form asp-action="SelectDoctors" >
+            <input type="hidden" name="service.ServiceName" value="@ViewBag.ServiceName"/>
+            <input type="hidden" name="service.ServiceDecription" value="@ViewBag.ServiceDecription"/>
+            <input type="hidden" name="service.ServicePrice" value="@ViewBag.ServicePrice"/>
+
+            @for(int i = 0; i < Model.Count; i++)
+            {
+                <input type="checkbox" id="@("DoctorCheckBox" + Model[i].DoctorId)" name="selectedDoctors" value="@Model[i].DoctorId">
+                <label for="@("DoctorCheckBox" + Model[i].DoctorId)">
+                    @Model[i].DoctorSurname @Model[i].DoctorName @Model[i].DoctorPatronymic
+                </label>
+            }
+            <input type="submit" value="Создать" class="btn btn-primary btn-create" />
+        </form>
+        
+
+    </div>
+</main>
+

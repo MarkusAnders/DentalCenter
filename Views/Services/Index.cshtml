@@ -40,15 +40,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ServicePrice)
                         </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
-                        </td>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
         </table>
-
+        <a class="btn btn-primary" asp-controller="MakeAppoinments" asp-action="SelectService" >Записаться на прием</a>
     </div>
 </main>

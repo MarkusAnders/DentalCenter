@@ -1,0 +1,40 @@
+﻿
+@model IEnumerable<DentalCenter.Models.Appointment>
+
+<main role="main" class="pb-3">
+    <div class="contact-img appointments-make"></div>
+    <div class="container">
+        <h1 class="title">Выбор визита</h1>
+        <div class="delete-view">
+            @using (Html.BeginForm("ChooseDate", "MakeAppoinments", FormMethod.Post))
+            {
+                <div class="choosedate-view">
+                    <input type="hidden" name="ServiceId" value="@ViewBag.ServiceId" />
+                    <input type="hidden" name="DoctorId" value="@ViewBag.DoctorId" />
+                    <label class="card-title">Дата визита</label>
+                    <input type="date" name="AppointmentDateVisiting" class="form-control" />
+                    <input type="submit" value="Выбрать" class="btn btn-primary btn-choosedate" />
+                </div>
+            }
+        </div>
+        <h3 class="title">Существующие записи</h3>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AppointmentDateVisiting)
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (item.ServiceId == ViewBag.ServiceId && item.DoctorId == ViewBag.DoctorId)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppointmentDateVisiting)
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</main>

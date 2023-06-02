@@ -58,15 +58,27 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,ServiceName,ServicePrice")] Service service)
+        public async Task<IActionResult> Create(Service service)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(service);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(service);
+            ViewBag.ServiceName = service.ServiceName;
+            ViewBag.ServiceDecription = service.ServiceDecription;
+            ViewBag.ServicePrice = service.ServicePrice;
+            return View(nameof(SelectDoctors), await _context.Doctors.ToListAsync());
+        }
+
+        public async Task<IActionResult> SelectDoctors(Service service)
+        {
+            return View(await _context.Doctors.ToListAsync());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SelectDoctors(Service service, List<int> selectedDoctors)
+        {
+            service.Doctors = await _context.Doctors.Where(d => selectedDoctors.Contains(d.DoctorId)).ToListAsync();
+            _context.Add(service);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = "admin")]
@@ -91,7 +103,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ServiceId,ServiceName,ServicePrice")] Service service)
+        public async Task<IActionResult> Edit(int id, Service service)
         {
             if (id != service.ServiceId)
             {

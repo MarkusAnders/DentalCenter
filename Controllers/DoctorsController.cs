@@ -40,19 +40,29 @@ namespace DentalCenter.Controllers
         // GET: Doctors/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
+
             if (id == null || _context.Doctors == null)
             {
                 return NotFound();
             }
-            
             var doctor = await _context.Doctors
-                .FirstOrDefaultAsync(m => m.DoctorId == id && m.IdentityUserId == _userManager.GetUserId(HttpContext.User));
+                .FirstOrDefaultAsync(m => m.DoctorId == id);
             if (doctor == null)
             {
                 return NotFound();
             }
 
-            ViewBag.DoctorId = doctor.DoctorId;
+            if (!doctor.DoctorPhoto.IsNullOrEmpty())
+            {
+                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + doctor.DoctorPhoto);
+
+                ViewBag.Photodata = photodata;
+            }
+            else
+            {
+                ViewBag.Photodata = null;
+            }
 
             return View(doctor);
         }
@@ -77,7 +87,7 @@ namespace DentalCenter.Controllers
                 {
                     string path = "/PhotoDoctors/" + upload.FileName;
                     using (var fileStream = new
-                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                     {
                         await upload.CopyToAsync(fileStream);
                     }
@@ -86,9 +96,6 @@ namespace DentalCenter.Controllers
 
                 _context.Add(doctor);
                 await _context.SaveChangesAsync();
-                
-                string id = _userManager.GetUserId(HttpContext.User);
-
                 return RedirectToAction(nameof(Index));
             }
             return View(doctor);
@@ -140,7 +147,7 @@ namespace DentalCenter.Controllers
                 {
                     string path = "/PhotoDoctors/" + upload.FileName;
                     using (var fileStream = new
-                   FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                     {
                         await upload.CopyToAsync(fileStream);
                     }

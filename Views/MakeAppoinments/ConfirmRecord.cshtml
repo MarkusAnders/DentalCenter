@@ -1,0 +1,35 @@
+﻿@model DentalCenter.Models.Appointment
+
+
+<main role="main" class="pb-3">
+    <div class="contact-img confirm"></div>
+    <div class="container">
+        <h1 class="title">Подтверждение записи</h1>
+
+        <div class="delete-view">
+            @using (Html.BeginForm("ConfirmRecord", "MakeAppoinments", FormMethod.Post))
+            {
+            <div class="form-group">
+                    <label class=""> <span>Услуга: </span> @ViewBag.Service.ServiceName</label>
+                    <label class=""> <span>Цена:</span> @ViewBag.Service.ServicePrice</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Доктор: @ViewBag.Doctor.DoctorSurname  @ViewBag.Doctor.DoctorName @ViewBag.Doctor.DoctorPatronymic</label> 
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Дата встречи: @ViewBag.AppointmentDateVisiting</label>
+                </div>
+
+                <input type="hidden" asp-for="ServiceId" value="@ViewBag.Service.ServiceId" />
+                <input type="hidden" asp-for="Id" value="@ViewBag.Id" />
+                <input type="hidden" asp-for="DoctorId" value="@ViewBag.Doctor.DoctorId" />
+                <input type="hidden" asp-for="AppointmentId" value="@ViewBag.AppointmentId" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Подтвердить" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</main>

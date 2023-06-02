@@ -33,5 +33,7 @@ namespace DentalCenter.Models
 
         [Display(Name = "Фотография")]
         public string? DoctorPhoto { get; set; }
+
+        public List<Service> Services { get; set; }
     }
 }

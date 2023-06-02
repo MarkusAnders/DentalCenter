@@ -703,3 +703,36 @@ tbody:hover tr:hover td {
 
 /* попап */
 
+/*Выбор визита*/
+
+.appointments-make {
+    background-color: #FADBE2;
+}
+
+.choosedate-view {
+    padding: 20px;
+    text-align: center;
+}
+
+.btn-choosedate {
+    padding: 8px 50px;
+    margin: 20px 0;
+}
+
+.card-title{
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+
+/*Выбор визита*/
+
+/*Подтверждение*/
+
+.confirm {
+    background-color: #DBDEFA;
+}
+
+/*Подтверждение*/
+

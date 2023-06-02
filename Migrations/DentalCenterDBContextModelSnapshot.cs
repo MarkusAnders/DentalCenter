@@ -89,13 +89,47 @@ namespace DentalCenter.Migrations
                     b.ToTable("DentalCenterUser");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.Client", b =>
+            modelBuilder.Entity("DentalCenter.Models.Appointment", b =>
                 {
-                    b.Property<int>("ClientId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClientId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AppointmentDateVisiting")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("Appointment");
+                });
+
+            modelBuilder.Entity("DentalCenter.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("ClientDateBirth")
                         .HasColumnType("datetime2");
@@ -119,11 +153,17 @@ namespace DentalCenter.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DentalCenterUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ClientId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("DentalCenterUserId");
 
                     b.ToTable("Clients");
                 });
@@ -202,29 +242,6 @@ namespace DentalCenter.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.DoctorService", b =>
-                {
-                    b.Property<int>("DoctorServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorServiceId"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DoctorServiceId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("ServiceId");
-
-                    b.ToTable("DoctorService");
-                });
-
             modelBuilder.Entity("DentalCenter.Models.Service", b =>
                 {
                     b.Property<int>("ServiceId")
@@ -233,8 +250,10 @@ namespace DentalCenter.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
 
-                    b.Property<int>("ServiceDecription")
-                        .HasColumnType("int");
+                    b.Property<string>("ServiceDecription")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("ServiceName")
                         .IsRequired()
@@ -248,19 +267,27 @@ namespace DentalCenter.Migrations
                     b.ToTable("Service");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.Doctor", b =>
+            modelBuilder.Entity("DoctorService", b =>
                 {
-                    b.HasOne("DentalCenter.Areas.Identity.Data.DentalCenterUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("DoctorsDoctorId")
+                        .HasColumnType("int");
 
-                    b.Navigation("IdentityUser");
+                    b.Property<int>("ServicesServiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorsDoctorId", "ServicesServiceId");
+
+                    b.HasIndex("ServicesServiceId");
+
+                    b.ToTable("DoctorService");
                 });
 
-            modelBuilder.Entity("DentalCenter.Models.DoctorService", b =>
+            modelBuilder.Entity("DentalCenter.Models.Appointment", b =>
                 {
+                    b.HasOne("DentalCenter.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
                     b.HasOne("DentalCenter.Models.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
@@ -273,9 +300,48 @@ namespace DentalCenter.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Client");
+
                     b.Navigation("Doctor");
 
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("DentalCenter.Models.Client", b =>
+                {
+                    b.HasOne("DentalCenter.Areas.Identity.Data.DentalCenterUser", "DentalCenterUser")
+                        .WithMany()
+                        .HasForeignKey("DentalCenterUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DentalCenterUser");
+                });
+
+            modelBuilder.Entity("DentalCenter.Models.Doctor", b =>
+                {
+                    b.HasOne("DentalCenter.Areas.Identity.Data.DentalCenterUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IdentityUser");
+                });
+
+            modelBuilder.Entity("DoctorService", b =>
+                {
+                    b.HasOne("DentalCenter.Models.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsDoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DentalCenter.Models.Service", null)
+                        .WithMany()
+                        .HasForeignKey("ServicesServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
