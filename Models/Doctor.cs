@@ -8,7 +8,7 @@ namespace DentalCenter.Models
     {
         public string IdentityUserId { get; set; }
 
-        public DentalCenterUser IdentityUser { get; set; }
+        public DentalCenterUser? IdentityUser { get; set; }
         public int DoctorId { get; set; }
 
         [EmailAddress(ErrorMessage = "Некорректный e-mail")]
@@ -34,6 +34,6 @@ namespace DentalCenter.Models
         [Display(Name = "Фотография")]
         public string? DoctorPhoto { get; set; }
 
-        public List<Service> Services { get; set; }
+        public List<Service>? Services { get; set; }
     }
 }

@@ -109,7 +109,7 @@ namespace DentalCenter.Controllers
                 return NotFound();
             }
 
-            var doctor = await _context.Doctors.FindAsync(id);
+            var doctor = await _context.Doctors.Include(d => d.IdentityUser).Where(d => d.DoctorId == id).FirstOrDefaultAsync();
             if (doctor == null)
             {
                 return NotFound();
@@ -117,7 +117,7 @@ namespace DentalCenter.Controllers
 
             if (!doctor.DoctorPhoto.IsNullOrEmpty())
             {
-                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + doctor.DoctorId);
+                byte[] photodata = System.IO.File.ReadAllBytes(_appEnvironment.WebRootPath + doctor.DoctorPhoto);
                 ViewBag.Photodata = photodata;
             }
             else
@@ -134,7 +134,7 @@ namespace DentalCenter.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorSpecialization,DoctorCabinet,DoctorPhoto")] Doctor doctor, IFormFile? upload)
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorId,Email,DoctorSurname,DoctorName,DoctorPatronymic,DoctorSpecialization,DoctorCabinet, IdentityUserId")] Doctor doctor, IFormFile? upload)
         {
             if (id != doctor.DoctorId)
             {

@@ -32,23 +32,31 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Client.ClientName)
+                @Html.DisplayFor(modelItem => item.Client.ClientSurname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Service.ServiceId)
+                @Html.DisplayFor(modelItem => item.Service.ServiceName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Doctor.Email)
+                @Html.DisplayFor(modelItem => item.Doctor.DoctorSurname)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AppointmentDateVisiting)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                    </td>
+                }
+                else{
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a>
+                    </td>
+                }
+            </tr>
 }
     </tbody>
 </table>

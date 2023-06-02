@@ -23,23 +23,26 @@ namespace DentalCenter.Controllers
 
         public async Task<IActionResult> SelectService()
         {
+            
             return View(await _context.Service.ToListAsync());
         }
 
         [HttpPost]
         public async Task<IActionResult> SelectService(int serviceId)
         {
-            Service service = await _context.Service.FindAsync(serviceId);
+            Service service = await _context.Service.Where(d => d.ServiceId == serviceId).FirstOrDefaultAsync();
             if (service == null)
             {
                 return NotFound();
             }
             ViewBag.ServiceId = serviceId;
-            return View(nameof(SelectDoctor), await _context.Doctors.ToListAsync());
+            
+            return View(nameof(SelectDoctor), await _context.Doctors.Where(d => d.Services.Contains(service)).ToListAsync());
         }
 
         public async Task<IActionResult> SelectDoctor()
         {
+            
             return View(await _context.Doctors.ToListAsync());
         }
         [HttpPost]
@@ -47,6 +50,7 @@ namespace DentalCenter.Controllers
         {
             Doctor doctor = await _context.Doctors.FindAsync(doctorId);
             Service service = await _context.Service.FindAsync(serviceId);
+           
             if (doctor == null || service == null)
             {
                 return NotFound();
