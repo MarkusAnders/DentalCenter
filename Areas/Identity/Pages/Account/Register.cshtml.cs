@@ -185,7 +185,7 @@ namespace DentalCenter.Areas.Identity.Pages.Account
                         _context.Doctors.Add(doctor);
                         _context.SaveChanges();
 
-                        return Redirect("~/Home/Index");
+                        return Redirect("~/Doctors/Index");
                     }
 
                     var userId = await _userManager.GetUserIdAsync(user);

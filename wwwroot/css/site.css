@@ -736,3 +736,93 @@ tbody:hover tr:hover td {
 
 /*Подтверждение*/
 
+
+/*Карточка доктора*/
+
+.card-doctor {
+    background-color: #DBDEFA;
+    height: 57%;
+}
+
+.card-view{
+    width: 80%;
+    background-color: #fff;
+    border-radius: 50px;
+    padding: 60px;
+    margin: 0 auto 50px;
+}
+
+.card-view-info {
+    display: flex;
+    justify-content: center;
+}
+
+.card-string{
+    width: 40%;
+}
+
+.card-view-btn{
+    margin-left: 125px;
+}
+
+.edit-doctor {
+    background-color: #FADBE2;
+    height: 59%;
+}
+
+.edit-view-info{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.edit-img{
+    margin: 25px;
+    text-align: center;
+}
+
+.edit-btn{
+    margin-left: 115px;
+}
+
+.card-service{
+    background-color: #DBDEFA;
+    height: 50%;
+}
+
+.edit-serivce {
+    background: #FADBE2;
+    height: 50%;
+}
+
+.btn-edit{
+    margin-top: 20px;
+}
+
+.card-view-edit{
+    width: 100%;
+}
+
+.check-doctor {
+    background: #DBEFFA;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.doctorchoose {
+    font-size: 20px;
+}
+
+.doctorchoose span {
+    font-weight: 800;
+}
+
+.create {
+    padding: 8px 40px;
+}
+
+/*Карточка доктора*/

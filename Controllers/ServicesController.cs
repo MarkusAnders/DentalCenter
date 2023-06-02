@@ -83,14 +83,13 @@ namespace DentalCenter.Controllers
 
         [Authorize(Roles = "admin")]
         // GET: Services/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int DoctorId)
         {
             if (id == null || _context.Service == null)
             {
                 return NotFound();
             }
-
-            var service = await _context.Service.FindAsync(id);
+            var service = await _context.Service.Include(d => d.Doctors).Where(d => d.ServiceId == id).FirstOrDefaultAsync();
             if (service == null)
             {
                 return NotFound();

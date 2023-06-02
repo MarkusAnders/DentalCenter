@@ -5,67 +5,76 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<main role="main" class="pb-3">
+    <div class="contact-img edit-doctor"></div>
+    <div class="container">
+        <h1 class="title">Редактирование</h1>
 
-<h4>Doctor</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="DoctorId" />
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorSurname" class="control-label"></label>
-                <input asp-for="DoctorSurname" class="form-control" />
-                <span asp-validation-for="DoctorSurname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorName" class="control-label"></label>
-                <input asp-for="DoctorName" class="form-control" />
-                <span asp-validation-for="DoctorName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorPatronymic" class="control-label"></label>
-                <input asp-for="DoctorPatronymic" class="form-control" />
-                <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorSpecialization" class="control-label"></label>
-                <input asp-for="DoctorSpecialization" class="form-control" />
-                <span asp-validation-for="DoctorSpecialization" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorCabinet" class="control-label"></label>
-                <input asp-for="DoctorCabinet" class="form-control" />
-                <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
-            </div>
-            <input type="hidden" name="Photo" value="@Model.DoctorPhoto" />
-                @if (ViewBag.Photodata != null)
-                {
-                    <img class="mt-4 mb-4" width="200" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Photodata))">
-                }
-                <div class="form-group">
-                    <div class="mt-4">
-                        <input type="file" name="upload" class="form-control" /><br>
+        <div class="card-view">
+            <div class="col">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="DoctorId" />
+                    <div class="edit-view-info">
+                        <div class="edit-view">
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input readOnly asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DoctorSurname" class="control-label"></label>
+                                <input asp-for="DoctorSurname" class="form-control" />
+                                <span asp-validation-for="DoctorSurname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DoctorName" class="control-label"></label>
+                                <input asp-for="DoctorName" class="form-control" />
+                                <span asp-validation-for="DoctorName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DoctorPatronymic" class="control-label"></label>
+                                <input asp-for="DoctorPatronymic" class="form-control" />
+                                <span asp-validation-for="DoctorPatronymic" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DoctorSpecialization" class="control-label"></label>
+                                <input asp-for="DoctorSpecialization" class="form-control" />
+                                <span asp-validation-for="DoctorSpecialization" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DoctorCabinet" class="control-label"></label>
+                                <input asp-for="DoctorCabinet" class="form-control" />
+                                <span asp-validation-for="DoctorCabinet" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="edit-img">
+                            @if (ViewBag.Photodata != null)
+                            {
+                                <img class="img-edit-card" width="300" src="data:image/jpeg;base64,@(Convert.ToBase64String(ViewBag.Photodata))">
+                            }
+                            <input type="hidden" name="Photo" value="@Model.DoctorPhoto" />
+                            <div class="form-group">
+                                <div class="mt-4">
+                                    <input type="file" name="upload" class="form-control choose-photo" /><br>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                    <div class="form-group edit-btn">
+                        <input type="submit" value="Сохранить" class="btn btn-primary" />
+                        <a class="btn btn-primary" asp-action="Index">Назад</a>
+                    </div>
+                    <input type="hidden" asp-for="IdentityUserId" value="@Model.IdentityUser.Id" />
+                </form>
             </div>
-            <input type="hidden" asp-for="IdentityUserId" value="@Model.IdentityUser.Id"/>
-        </form>
+        </div>
+        
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</main>

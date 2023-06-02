@@ -36,7 +36,7 @@ namespace DentalCenter.Controllers
                           Problem("Entity set 'DentalCenterDBContext.Doctors'  is null.");
         }
 
-        [Authorize(Roles = "admin, doctor")]
+        
         // GET: Doctors/Details/5
         public async Task<IActionResult> Details(int? id)
         {

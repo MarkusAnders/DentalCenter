@@ -21,9 +21,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DoctorCabinet)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DoctorPhoto)
-                </th>
             </tr>
             @foreach (var item in Model)
             {
@@ -43,9 +40,6 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DoctorCabinet)
                     </td>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DoctorPhoto)
-                    </th>
                     <td>
                         @using (Html.BeginForm("SelectDoctor", "MakeAppoinments", FormMethod.Post))
                         {

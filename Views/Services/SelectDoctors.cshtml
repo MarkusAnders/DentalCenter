@@ -12,12 +12,14 @@
 
             @for(int i = 0; i < Model.Count; i++)
             {
-                <input type="checkbox" id="@("DoctorCheckBox" + Model[i].DoctorId)" name="selectedDoctors" value="@Model[i].DoctorId">
-                <label for="@("DoctorCheckBox" + Model[i].DoctorId)">
-                    @Model[i].DoctorSurname @Model[i].DoctorName @Model[i].DoctorPatronymic
-                </label>
+                <div class="check-doctor">
+                    <input class="form-check-inputab-content check" type="checkbox" id="@("DoctorCheckBox" + Model[i].DoctorId)" name="selectedDoctors" value="@Model[i].DoctorId">
+                    <label class="doctorchoose" for="@("DoctorCheckBox" + Model[i].DoctorId)">
+                        @Model[i].DoctorSurname @Model[i].DoctorName @Model[i].DoctorPatronymic <span>(@Model[i].DoctorSpecialization)</span>
+                    </label>
+                </div>
             }
-            <input type="submit" value="Создать" class="btn btn-primary btn-create" />
+            <input type="submit" value="Создать" class="btn btn-primary btn-create" style="margin-top: 20px;"/>
         </form>
         
 

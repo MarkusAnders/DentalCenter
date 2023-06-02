@@ -99,6 +99,8 @@ namespace DentalCenter.Controllers
             }
             ViewData["DoctorId"] = new SelectList(_context.Doctors, "Id", "FirstName", appointments.DoctorId);
             ViewData["ServiceId"] = new SelectList(_context.Service, "Id", "FirstName", appointments.ServiceId);
+            ViewData["AppointmentDateVisiting"] = new SelectList(_context.Appointment, "Id", "FirstName", appointments.AppointmentDateVisiting);
+
             return RedirectToAction(nameof(Index), "Home");
         }
     }

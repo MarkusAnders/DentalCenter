@@ -5,58 +5,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<main role="main" class="pb-3">
+    <div class="container">
+        <h1 class="title"> Прием</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Client)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Service)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Doctor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppointmentDateVisiting)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Client.ClientSurname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Service.ServiceName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.DoctorSurname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentDateVisiting)
-            </td>
-                @if (User.IsInRole("admin"))
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Client)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Service)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Service)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Doctor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AppointmentDateVisiting)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Client.ClientSurname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Service.ServicePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Doctor.DoctorSurname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AppointmentDateVisiting)
+                        </td>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Редактировать</a> |
+                                <a asp-action="Details" asp-route-id="@item.AppointmentId">Информация</a> |
+                                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Удалить</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.AppointmentId">Информация</a>
+                            </td>
+                        }
+                    </tr>
                 }
-                else{
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a>
-                    </td>
-                }
-            </tr>
-}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</main>
